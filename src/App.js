@@ -1,25 +1,45 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Store from './flux/Store'
 import './App.css';
+import SearchForm from './SearchForm'
+import Navbar from './Navbar'
+import Notebook from './Notebook'
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this._onChange = this._onChange.bind(this);
+    this.getAppState = this.getAppState.bind(this);
+    this.state = this.getAppState();
+  }
+  getAppState() {
+    return {
+      mode: Store.getViewMode(),
+      results: Store.getSearchResults()
+    }
+  }
+  componentDidMount() {
+    Store.addChangeListener(this._onChange);
+  }
+  componentWillUnmount() {
+    Store.removeChangeListener(this._onChange);
+  }
+  _onChange() {
+    this.setState(this.getAppState);
+  }
+
   render() {
+    var displayedComponent = '';
+    console.log(this.state);
+    if(this.state.mode === 'NOTEBOOK') {
+      displayedComponent = <Notebook />;
+    } else {
+      displayedComponent = <SearchForm state={this.state}/>;
+    }
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Navbar/>
+        {displayedComponent}
       </div>
     );
   }
