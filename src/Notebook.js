@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import NoteBrowser from './NoteBrowser';
 import NoteView from './NoteView'
 import './Notebook.css';
-import Actions from './flux/Actions';
 import Store from './flux/Store';
 
 class Notebook extends Component {
 
   constructor(props) {
     super(props);
-    Actions.getNotebooks();
-
     this.getNotebooks = this.getNotebooks.bind(this);
   }
 
@@ -25,7 +22,7 @@ class Notebook extends Component {
           <NoteBrowser notebooks={this.props.state.notebooks}/>
         </div>
         <div className="view">
-          <NoteView />
+          <NoteView notebook_results={this.props.state.notebook_results}/>
         </div>
       </div>
     );

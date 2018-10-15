@@ -4,14 +4,16 @@ import './App.css';
 import SearchForm from './SearchForm'
 import Navbar from './Navbar'
 import Notebook from './Notebook'
+import Actions from './flux/Actions'
 
 class App extends Component {
   constructor(props) {
     super(props);
+    Actions.getNotebooks();
+
     this._onChange = this._onChange.bind(this);
     this.getAppState = this.getAppState.bind(this);
     this.state = this.getAppState();
-    console.log(this.state)
   }
   getAppState() {
     return Store.getAppState();

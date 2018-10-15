@@ -28,8 +28,8 @@ class SearchForm extends Component {
 
   render() {
     var searchResults = '';
-    if(this.props.state.results) {
-      searchResults = <SearchResults results={this.props.state.results} page={this.props.state.page} query={this.props.state.query}/>;
+    if(this.props.state.search_results) {
+      searchResults = <SearchResults results={this.props.state.search_results} page={this.props.state.page} state={this.props.state}/>;
     } else {
       searchResults = '';
     }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { List, ListItem, Button, TextField } from '@material-ui/core';
 import Actions from './flux/Actions';
-import './NoteBrowser.css';
 
 class NoteBrowser extends Component {
   constructor(props) {
@@ -9,6 +8,7 @@ class NoteBrowser extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.deleteNotebook = this.deleteNotebook.bind(this);
+    this.showNotebook = this.showNotebook.bind(this);
   }
   state = { title: '' };
   onChange(e) {
@@ -23,6 +23,10 @@ class NoteBrowser extends Component {
 
   deleteNotebook(id) {
     Actions.deleteNotebook(id);
+  }
+
+  showNotebook(id) {
+    Actions.showNotebook(id);
   }
 
   render() {
@@ -52,8 +56,10 @@ class NoteBrowser extends Component {
         { Object.keys(notebooks).map((item, i) => {
           return (
             <ListItem key={i}>
-              <p className='notebook'>{notebooks[item].title}</p>
-              <Button variant="contained" color="primary" onClick={this.deleteNotebook.bind(this, notebooks[item].id)}>
+              <Button size="small" color="primary" onClick={this.showNotebook.bind(this, notebooks[item].id)}>
+              {notebooks[item].title}
+              </Button>
+              <Button variant="outlined" color="primary" onClick={this.deleteNotebook.bind(this, notebooks[item].id)}>
                 delete
               </Button>
             </ListItem>

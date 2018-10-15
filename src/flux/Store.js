@@ -3,12 +3,13 @@ import Constants from './Constants';
 import EventEmitter from 'events';
 import API from '../utils/Api.js';
 const CHANGE_EVENT = 'CHANGE';
-let _results = null;
+let _search_results = null;
 let _page = 0;
 let _mode = '';
 let _status = 'error';
 let _query = ''
 let _notebooks = null;
+let _notebooks_results = null;
 class Store extends EventEmitter {
   constructor() {
     super();
@@ -44,6 +45,14 @@ class Store extends EventEmitter {
         API.deleteNotebook(action.id);
         this.emit(CHANGE_EVENT);
         break;
+      case Constants.SHOW_NOTEBOOK:
+        API.showNotebook(action.id);
+        this.emit(CHANGE_EVENT);
+        break;
+      case Constants.GET_NOTEBOOK:
+        this.setNotebookResults(action.results);
+        this.emit(CHANGE_EVENT);
+        break;
       case Constants.GET_NOTEBOOKS:
         API.notebooks();
         this.emit(CHANGE_EVENT);
@@ -52,12 +61,8 @@ class Store extends EventEmitter {
         this.setNotebooks(action.notebooks);
         this.emit(CHANGE_EVENT);
         break;
-      case Constants.SAVED:
-        alert('saved')
-        this.emit(CHANGE_EVENT);
-        break;
-      case Constants.DELETED:
-        alert('deleted')
+      case Constants.SAVE_RESULT_TO_NOTEBOOK:
+        API.saveResultToNotebook(action.notebook_id, action.result);
         this.emit(CHANGE_EVENT);
         break;
       default:
@@ -70,9 +75,10 @@ class Store extends EventEmitter {
     return {
       mode: this.getViewMode(),
       query: this.getSearchQuery(),
-      results: this.getSearchResults().results,
+      search_results: this.getSearchResults().search_results,
       page: this.getSearchResults().page,
-      notebooks: this.getNotebooks()
+      notebooks: this.getNotebooks(),
+      notebook_results: this.getNotebookResults()
     }
   }
 
@@ -100,6 +106,14 @@ class Store extends EventEmitter {
     _notebooks = notebooks;
   }
 
+  getNotebookResults() {
+    return _notebooks_results;
+  }
+
+  setNotebookResults(notebooks_results) {
+    _notebooks_results = notebooks_results;
+  }
+
   getSearchQuery() {
     return _query;
   }
@@ -110,13 +124,13 @@ class Store extends EventEmitter {
 
   getSearchResults() {
     return {
-      results: _results,
+      search_results: _search_results,
       page: _page
     }
   }
 
   setSearchResults(results, page) {
-    _results = results;
+    _search_results = results;
     _page = page
   }
 

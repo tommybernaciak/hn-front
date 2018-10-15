@@ -35,17 +35,26 @@ class Actions {
     })
   }
 
-  showNotebook(notebooks) {
+  showNotebook(id) {
     AppDispatcher.dispatch({
-      actionType: Constants.SHOW_NOTEBOOKS,
-      notebooks: notebooks
+      actionType: Constants.SHOW_NOTEBOOK,
+      id: id
     })
   }
 
-  saveNote(note) {
+  getNotebookResults(data) {
     AppDispatcher.dispatch({
-      actionType: Constants.SAVE_NOTE,
-      note: note
+      actionType: Constants.GET_NOTEBOOK,
+      results: data.results.results
+    })
+
+  }
+
+  saveResultToNotebook(notebook_id, result) {
+    AppDispatcher.dispatch({
+      actionType: Constants.SAVE_RESULT_TO_NOTEBOOK,
+      notebook_id: notebook_id,
+      result: result
     })
   }
 

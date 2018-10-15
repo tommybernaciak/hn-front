@@ -20,13 +20,13 @@ class API {
     this.delete('/search_note_books', id, Actions.getNotebooks)
   }
 
-  // saveNote(note) {
-  //   this.post('/search_note_books', note, Actions.saved)
-  // }
+  showNotebook(id) {
+    this.get(`/search_note_books/${id}`, Actions.getNotebookResults)
+  }
 
-  // saveResult(result) {
-  //   this.post('/search_note_books', result, Actions.saved)
-  // }
+  saveResultToNotebook(notebook_id, result) {
+    this.post('/search_results', {notebook_id: notebook_id, result: result}, Actions.getNotebooks)
+  }
 
   get(url, action) {
     window.fetch(url)
@@ -38,7 +38,7 @@ class API {
   post(url, data, action) {
     return fetch(url, {
         method: "POST",
-        mode: "cors", // no-cors, cors, *same-origin
+        mode: "cors",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
@@ -51,7 +51,7 @@ class API {
   delete(url, id, action) {
   return fetch(url + '/' + id, {
       method: "DELETE",
-      mode: "cors", // no-cors, cors, *same-origin
+      mode: "cors",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
       },

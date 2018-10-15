@@ -10,7 +10,7 @@ class SearchResults extends Component {
         <p>results for: {this.props.query}</p>
          { Object.keys(this.props.results).map((item, i) => {
             return (
-              <SearchResult result={this.props.results[item]} key={i}/>
+              <SearchResult result={this.props.results[item]} key={i} state={this.props.state}/>
             );
           })}
         Page: {this.props.page}
