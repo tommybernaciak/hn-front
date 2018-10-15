@@ -8,10 +8,52 @@ class Actions {
     })
   }
 
+  getNotebooks() {
+    AppDispatcher.dispatch({
+      actionType: Constants.GET_NOTEBOOKS,
+    })
+  }
+
+  showNotebooks(notebooks) {
+    AppDispatcher.dispatch({
+      actionType: Constants.SHOW_NOTEBOOKS,
+      notebooks: notebooks
+    })
+  }
+
+  createNotebook(title) {
+    AppDispatcher.dispatch({
+      actionType: Constants.CREATE_NOTEBOOK,
+      title: title
+    })
+  }
+
+  deleteNotebook(id) {
+    AppDispatcher.dispatch({
+      actionType: Constants.DELETE_NOTEBOOK,
+      id: id
+    })
+  }
+
+  showNotebook(notebooks) {
+    AppDispatcher.dispatch({
+      actionType: Constants.SHOW_NOTEBOOKS,
+      notebooks: notebooks
+    })
+  }
+
+  saveNote(note) {
+    AppDispatcher.dispatch({
+      actionType: Constants.SAVE_NOTE,
+      note: note
+    })
+  }
+
   showSearchResults(results) {
     AppDispatcher.dispatch({
       actionType: Constants.SHOW_SEARCH_RESULTS,
-      results: results
+      results: results.results,
+      page: results.page
     })
   }
 

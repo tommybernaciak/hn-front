@@ -3,15 +3,18 @@ import Statistics from './Statistics';
 import SearchResult from './SearchResult'
 
 class SearchResults extends Component {
+
   render() {
     return (
       <div>
-        {this.props.results.map(result => {
+        <p>results for: {this.props.query}</p>
+         { Object.keys(this.props.results).map((item, i) => {
             return (
-              <SearchResult result={result}/>
+              <SearchResult result={this.props.results[item]} key={i}/>
             );
           })}
-        <Statistics />
+        Page: {this.props.page}
+        <Statistics query={this.props.query}/>
       </div>
     );
   }

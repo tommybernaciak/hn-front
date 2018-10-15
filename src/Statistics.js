@@ -13,19 +13,11 @@ class Statistics extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* {rows.map(row => {
-            return (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell numeric>{row.calories}</TableCell>
-                <TableCell numeric>{row.fat}</TableCell>
-                <TableCell numeric>{row.carbs}</TableCell>
-                <TableCell numeric>{row.protein}</TableCell>
-              </TableRow>
-            );
-          })} */}
+          <TableRow>
+            <TableCell>{this.props.query}</TableCell>
+            <TableCell numeric>2</TableCell>
+            <TableCell numeric>3</TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     );

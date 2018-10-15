@@ -11,12 +11,10 @@ class App extends Component {
     this._onChange = this._onChange.bind(this);
     this.getAppState = this.getAppState.bind(this);
     this.state = this.getAppState();
+    console.log(this.state)
   }
   getAppState() {
-    return {
-      mode: Store.getViewMode(),
-      results: Store.getSearchResults()
-    }
+    return Store.getAppState();
   }
   componentDidMount() {
     Store.addChangeListener(this._onChange);
@@ -30,15 +28,14 @@ class App extends Component {
 
   render() {
     var displayedComponent = '';
-    console.log(this.state);
     if(this.state.mode === 'NOTEBOOK') {
-      displayedComponent = <Notebook />;
+      displayedComponent = <Notebook state={this.state}/>;
     } else {
       displayedComponent = <SearchForm state={this.state}/>;
     }
     return (
       <div className="App">
-        <Navbar/>
+        <Navbar state={this.state}/>
         {displayedComponent}
       </div>
     );

@@ -7,21 +7,31 @@ class SearchForm extends Component {
 
   constructor(props) {
     super(props);
+    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.clear = this.clear.bind(this);
   }
 
   onSubmit(e) {
     e.preventDefault();
-    console.log(this)
-    Actions.searchHN(this.refs.query.value);
+    Actions.searchHN(this.props.state.query);
+  }
+
+  onChange(e) {
+    e.persist();
+    this.setState((state) => this.props.state.query += e.nativeEvent.data);
+  }
+
+  clear() {
+    this.setState((state) => this.props.state.query = '');
   }
 
   render() {
     var searchResults = '';
     if(this.props.state.results) {
-      searchResults = '';
+      searchResults = <SearchResults results={this.props.state.results} page={this.props.state.page} query={this.props.state.query}/>;
     } else {
-      searchResults = <SearchResults results={this.props.state.results}/>;
+      searchResults = '';
     }
     return (
       <div>
@@ -32,11 +42,16 @@ class SearchForm extends Component {
               id="query"
               label="Search"
               margin="normal"
-              ref="query"
+              ref="name"
+              value={this.props.state.query}
+              onChange={this.onChange}
             />
           </div>
           <Button variant="contained" color="secondary" type="submit">
             Search
+          </Button>
+          <Button variant="contained" color="primary" onClick={this.clear}>
+            Clear
           </Button>
         </form>
         {searchResults}
